@@ -5,11 +5,21 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class NavigationHelper extends HelperBase {
 
+    private FirefoxDriver wd;
+
     public NavigationHelper(FirefoxDriver wd) {
         super(wd);
     }
 
     public void gotoGroupPage() {
         click(By.linkText("groups"));
+    }
+
+    public void gotoHomePage() {
+        click(By.linkText("home"));
+    }
+
+    public void returnToGroupPage() {
+        click(By.linkText("group page"));
     }
 }

@@ -10,14 +10,6 @@ public class GroupHelper extends HelperBase {
         super(wd);
     }
 
-    public void returnToGroupPage() {
-        click(By.linkText("group page"));
-    }
-
-    public void submitGroupGreation() {
-        click(By.name("submit"));
-    }
-
     public void fillGroupForm(GroupData groupData) {
         type(By.name("group_name"), groupData.getName());
         type(By.name("group_header"), groupData.getHeader());
