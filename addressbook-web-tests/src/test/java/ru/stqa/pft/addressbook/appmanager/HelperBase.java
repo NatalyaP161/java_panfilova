@@ -33,4 +33,8 @@ public class HelperBase {
     public void submitCreation() {
         click(By.name("submit"));
     }
+
+    public void submitModification() {
+        click(By.name("update"));
+    }
 }
