@@ -36,8 +36,8 @@ public class ContactHelper extends HelperBase{
         click(By.linkText("add new"));
     }
 
-    public void     initContactModification() {
-        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    public void     initContactModification(int index) {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[" + index + "]/td[8]/a/img"));
     }
 
     public void selectContact(int index) {
@@ -67,16 +67,14 @@ public class ContactHelper extends HelperBase{
         List<ContactData> contacts = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.tagName("tr"));
         elements.remove(0);
-        int i = 2;
-        for (WebElement element : elements) {
-            String text = element.getText();
-            WebElement lastnameElement = element.findElement(By.xpath("//tr[" + i + "]//td[2]"));
-            WebElement firstnameElement = element.findElement(By.xpath("//tr[" + i + "]//td[3]"));
+        for (int i = 0; i < elements.size(); i++) {
+            String text = elements.get(i).getText();
+            WebElement lastnameElement = elements.get(i).findElement(By.xpath("//tr[" + (i+2) + "]//td[2]"));
+            WebElement firstnameElement = elements.get(i).findElement(By.xpath("//tr[" + (i+2) + "]//td[3]"));
             String lastname = lastnameElement.getText();
             String firstname = firstnameElement.getText();
             ContactData contact = new ContactData(firstname,null, lastname,null,null,null,null);
             contacts.add(contact);
-            i++;
         }
         return contacts;
     }
