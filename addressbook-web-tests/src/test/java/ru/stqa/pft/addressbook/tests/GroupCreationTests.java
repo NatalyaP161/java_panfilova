@@ -20,9 +20,12 @@ public class GroupCreationTests extends TestBase {
         List<GroupData>  after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(),before.size() + 1);
 
-        group.setId(after.stream().max(Comparator.comparingInt(o -> o.getId())).get().getId());
+        Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::getId);
+        after.sort(byId);
+        group.setId(after.get(after.size() - 1).getId());
         before.add(group);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        before.sort(byId);
+        Assert.assertEquals(before, after);
     }
 
 }
