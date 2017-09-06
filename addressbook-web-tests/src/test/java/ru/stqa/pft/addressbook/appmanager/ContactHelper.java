@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.apache.xpath.SourceTree;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -68,7 +67,7 @@ public class ContactHelper extends HelperBase{
         List<WebElement> elements = wd.findElements(By.tagName("tr"));
         elements.remove(0);
         for (int i = 0; i < elements.size(); i++) {
-            String id = elements.get(i).findElement(By.tagName("input")).getAttribute("value");
+            int id = Integer.parseInt(elements.get(i).findElement(By.tagName("input")).getAttribute("value"));
             String lastname = elements.get(i).findElement(By.xpath("//tr[" + (i+2) + "]//td[2]")).getText();
             String firstname = elements.get(i).findElement(By.xpath("//tr[" + (i+2) + "]//td[3]")).getText();
             ContactData contact = new ContactData(id, firstname,null, lastname,null,null,null,null);
