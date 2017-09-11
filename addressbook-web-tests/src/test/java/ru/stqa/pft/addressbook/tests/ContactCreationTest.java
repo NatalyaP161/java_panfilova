@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import java.util.Comparator;
 import java.util.List;
 
-public class ContactCreationTests extends TestBase {
+public class ContactCreationTest extends TestBase {
 
     @Test
     public void testContactCreation() {

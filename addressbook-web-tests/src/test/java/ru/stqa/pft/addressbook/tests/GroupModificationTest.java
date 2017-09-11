@@ -7,7 +7,7 @@ import ru.stqa.pft.addressbook.model.GroupData;
 import java.util.Comparator;
 import java.util.List;
 
-public class GroupModificationTests extends TestBase {
+public class GroupModificationTest extends TestBase {
 
     @Test
     public void testGroupModification() {
