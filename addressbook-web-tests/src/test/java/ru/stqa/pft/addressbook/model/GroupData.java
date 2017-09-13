@@ -36,8 +36,9 @@ public class GroupData {
         return id;
     }
 
-    public void withId(int id) {
+    public GroupData withId(int id) {
         this.id = id;
+        return this;
     }
 
     @Override

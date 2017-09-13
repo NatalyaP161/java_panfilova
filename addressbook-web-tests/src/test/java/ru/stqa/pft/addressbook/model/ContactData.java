@@ -66,8 +66,9 @@ public class ContactData {
         return id;
     }
 
-    public void withId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return this;
     }
 
     @Override
