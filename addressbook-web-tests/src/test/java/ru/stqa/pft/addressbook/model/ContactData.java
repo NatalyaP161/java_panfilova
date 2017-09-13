@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.model;
 
+import java.util.stream.IntStream;
+
 public class ContactData {
     private int id;
     private final String firstname;
@@ -64,7 +66,7 @@ public class ContactData {
         return id;
     }
 
-    public void setId(int id) {
+    public void withId(int id) {
         this.id = id;
     }
 

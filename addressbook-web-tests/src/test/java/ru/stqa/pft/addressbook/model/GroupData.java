@@ -14,7 +14,7 @@ public class GroupData {
     }
 
     public GroupData(String name, String header, String footer) {
-        this.id = 0;
+        this.id = Integer.MAX_VALUE;
         this.name = name;
         this.header = header;
         this.footer = footer;
@@ -36,7 +36,7 @@ public class GroupData {
         return id;
     }
 
-    public void setId(int id) {
+    public void withId(int id) {
         this.id = id;
     }
 
