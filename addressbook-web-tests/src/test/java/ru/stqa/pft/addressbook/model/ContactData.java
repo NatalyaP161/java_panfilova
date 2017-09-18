@@ -1,7 +1,5 @@
 package ru.stqa.pft.addressbook.model;
 
-import java.util.stream.IntStream;
-
 public class ContactData {
     private int id;
     private final String firstname;
@@ -10,9 +8,11 @@ public class ContactData {
     private final String addres;
     private final String homephone;
     private final String mobilephone;
+    private final String workPhone;
     private String group;
+    private String allPhones;
 
-    public ContactData(int id, String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String group) {
+    public ContactData(int id, String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group) {
         this.id = id;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -20,10 +20,12 @@ public class ContactData {
         this.addres = addres;
         this.homephone = homephone;
         this.mobilephone = mobilephone;
+        this.workPhone = workPhone;
         this.group = group;
+        this.allPhones = null;
     }
 
-    public ContactData(String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String group) {
+    public ContactData(String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group) {
         this.id = 0;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -31,7 +33,9 @@ public class ContactData {
         this.addres = addres;
         this.homephone = homephone;
         this.mobilephone = mobilephone;
+        this.workPhone = workPhone;
         this.group = group;
+        this.allPhones = null;
     }
 
     public String getFirstname() {
@@ -58,12 +62,25 @@ public class ContactData {
         return mobilephone;
     }
 
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
     public String getGroup() {
         return group;
     }
 
     public int getId() {
         return id;
+    }
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
     }
 
     public ContactData withId(int id) {
@@ -74,7 +91,7 @@ public class ContactData {
     @Override
     public String toString() {
         return "ContactData{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 '}';
