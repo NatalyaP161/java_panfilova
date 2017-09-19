@@ -92,7 +92,10 @@ public class ContactHelper extends HelperBase {
             String lastname = cells.get(1).getText();
             String firstname = cells.get(2).getText();
             String allPhones = cells.get(5).getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, null, null, null, null, null).withAllPhones(allPhones);
+            String adress = cells.get(3).getText();
+            String allEmails = cells.get(4).getText();
+            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null)
+                    .withAllPhones(allPhones).withAllEmails(allEmails);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
@@ -105,7 +108,11 @@ public class ContactHelper extends HelperBase {
         String homePhone = wd.findElement(By.name("home")).getAttribute("value");
         String mobilePhome = wd.findElement(By.name("mobile")).getAttribute("value");
         String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
-        return new ContactData(contact.getId(), firstname, null, lastname, null, homePhone, mobilePhome, workPhone, null);
+        return new ContactData(contact.getId(), firstname, null, lastname, address, homePhone, mobilePhome, workPhone, null, email, email2, email3);
     }
 }

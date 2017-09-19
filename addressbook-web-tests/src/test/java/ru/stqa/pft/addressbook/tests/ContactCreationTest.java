@@ -14,8 +14,8 @@ public class ContactCreationTest extends TestBase {
     public void testContactCreation() {
         app.goTo().HomePage();
         Contacts before = app.contact().all();
-        ContactData contact = new ContactData
-                ("Иван", "Васильевич", "Абашев", null, "221-65-52", "89185555550","456-55-51","test1");
+        ContactData contact = new ContactData("Иван", "Васильевич", "Абашев", null, "221-65-52", "89185555550","456-55-51","test1",
+                "1.ru", "2.ru", "3.ru");
         app.contact().create(contact,true);
         app.goTo().HomePage();
         assertEquals(app.contact().count(),before.size() + 1);
