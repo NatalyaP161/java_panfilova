@@ -24,6 +24,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("home"), contactData.getHomephone());
         type(By.name("mobile"), contactData.getMobilephone());
         type(By.name("work"), contactData.getWorkPhone());
+        attach(By.name("photo"), contactData.getPhoto());
 
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -94,7 +95,7 @@ public class ContactHelper extends HelperBase {
             String allPhones = cells.get(5).getText();
             String adress = cells.get(3).getText();
             String allEmails = cells.get(4).getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null)
+            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null, null)
                     .withAllPhones(allPhones).withAllEmails(allEmails);
             contactCache.add(contact);
         }
@@ -113,6 +114,6 @@ public class ContactHelper extends HelperBase {
         String email2 = wd.findElement(By.name("email2")).getAttribute("value");
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
-        return new ContactData(contact.getId(), firstname, null, lastname, address, homePhone, mobilePhome, workPhone, null, email, email2, email3);
+        return new ContactData(contact.getId(), firstname, null, lastname, address, homePhone, mobilePhome, workPhone, null, email, email2, email3, null);
     }
 }
