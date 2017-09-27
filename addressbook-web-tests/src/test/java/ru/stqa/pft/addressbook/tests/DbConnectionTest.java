@@ -12,8 +12,8 @@ public class DbConnectionTest {
     public void testDbConnection() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:8080/addressbook?user=root&password=");
-            /*Statement st = conn.createStatement();
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/addressbook?user=root&password=");
+            Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select group_id, group_name, group_header, group_footer from group_list");
             Groups groups = new Groups();
             while (rs.next()) {
@@ -23,7 +23,7 @@ public class DbConnectionTest {
             st.close();
             conn.close();
 
-            System.out.println(groups);*/
+            System.out.println(groups);
 
         } catch (SQLException ex) {
             // handle any errors
