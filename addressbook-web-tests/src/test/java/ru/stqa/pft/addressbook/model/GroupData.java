@@ -48,6 +48,12 @@ public class GroupData {
         this.footer = footer;
     }
 
+    public GroupData() {
+        this.name = null;
+        this.header = null;
+        this.footer = null;
+    }
+
     public String getName() {
         return name;
     }
