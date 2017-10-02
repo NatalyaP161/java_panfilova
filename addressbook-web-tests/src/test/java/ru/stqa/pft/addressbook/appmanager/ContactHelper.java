@@ -24,6 +24,9 @@ public class ContactHelper extends HelperBase {
         type(By.name("home"), contactData.getHomephone());
         type(By.name("mobile"), contactData.getMobilephone());
         type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
         attach(By.name("photo"), contactData.getPhoto());
 
         if (creation) {
@@ -95,7 +98,8 @@ public class ContactHelper extends HelperBase {
             String allPhones = cells.get(5).getText();
             String adress = cells.get(3).getText();
             String allEmails = cells.get(4).getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null, null)
+            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null,
+                    null)
                     .withAllPhones(allPhones).withAllEmails(allEmails);
             contactCache.add(contact);
         }

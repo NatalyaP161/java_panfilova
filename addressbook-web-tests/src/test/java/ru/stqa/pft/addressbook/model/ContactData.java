@@ -2,26 +2,67 @@ package ru.stqa.pft.addressbook.model;
 
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
 @XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
     @XStreamOmitField
+    @Id
+    @Column(name = "id")
     private int id;
+
+    @Column(name = "firstname")
     private final String firstname;
+
+    @Column(name = "middlename")
     private final String middlename;
+
+    @Column(name = "lastname")
     private final String lastname;
+
+    @Column(name = "address")
+    @Type(type = "text")
     private final String addres;
+
+    @Column(name = "home")
+    @Type(type = "text")
     private final String homephone;
+
+    @Column(name = "mobile")
+    @Type(type = "text")
     private final String mobilephone;
+
+    @Column(name = "work")
+    @Type(type = "text")
     private final String workPhone;
+
+    @Transient
     private String group;
+
+    @Transient
     private String allPhones;
+
+    @Column(name = "email")
+    @Type(type = "text")
     private final String email;
+
+    @Column(name = "email2")
+    @Type(type = "text")
     private  final String email2;
+
+    @Column(name = "email3")
+    @Type(type = "text")
     private final String email3;
+
+    @Transient
     private String allEmails;
+
+    @Transient
     private File photo;
 
     public ContactData(int id, String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group, String email, String email2,
@@ -44,7 +85,7 @@ public class ContactData {
     }
 
     public ContactData(String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group, String email, String email2,
-                       String email3, File photo) {
+                        String email3, File photo) {
         this.id = 0;
         this.firstname = firstname;
         this.middlename = middlename;
@@ -60,6 +101,23 @@ public class ContactData {
         this.allPhones = null;
         this.allEmails = null;
         this.photo = photo;
+    }
+
+    public ContactData() {
+        this.firstname = null;
+        this.middlename = null;
+        this.lastname = null;
+        this.addres = null;
+        this.homephone = null;
+        this.mobilephone = null;
+        this.workPhone = null;
+        this.email = null;
+        this.email2 = null;
+        this.email3 = null;
+        this.group = null;
+        this.allPhones = null;
+        this.allEmails = null;
+        this.photo = null;
     }
 
     public String getFirstname() {
@@ -146,7 +204,15 @@ public class ContactData {
         return "ContactData{" +
                 "id=" + id +
                 ", firstname='" + firstname + '\'' +
+                ", middlename='" + middlename + '\'' +
                 ", lastname='" + lastname + '\'' +
+                ", addres='" + addres + '\'' +
+                ", homephone='" + homephone + '\'' +
+                ", mobilephone='" + mobilephone + '\'' +
+                ", workPhone='" + workPhone + '\'' +
+                ", email='" + email + '\'' +
+                ", email2='" + email2 + '\'' +
+                ", email3='" + email3 + '\'' +
                 '}';
     }
 
@@ -159,15 +225,30 @@ public class ContactData {
 
         if (id != that.id) return false;
         if (firstname != null ? !firstname.equals(that.firstname) : that.firstname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+        if (middlename != null ? !middlename.equals(that.middlename) : that.middlename != null) return false;
+        if (lastname != null ? !lastname.equals(that.lastname) : that.lastname != null) return false;
+        if (addres != null ? !addres.equals(that.addres) : that.addres != null) return false;
+        if (homephone != null ? !homephone.equals(that.homephone) : that.homephone != null) return false;
+        if (mobilephone != null ? !mobilephone.equals(that.mobilephone) : that.mobilephone != null) return false;
+        if (workPhone != null ? !workPhone.equals(that.workPhone) : that.workPhone != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (email2 != null ? !email2.equals(that.email2) : that.email2 != null) return false;
+        return email3 != null ? email3.equals(that.email3) : that.email3 == null;
     }
 
     @Override
     public int hashCode() {
         int result = id;
         result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
+        result = 31 * result + (middlename != null ? middlename.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        result = 31 * result + (addres != null ? addres.hashCode() : 0);
+        result = 31 * result + (homephone != null ? homephone.hashCode() : 0);
+        result = 31 * result + (mobilephone != null ? mobilephone.hashCode() : 0);
+        result = 31 * result + (workPhone != null ? workPhone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (email2 != null ? email2.hashCode() : 0);
+        result = 31 * result + (email3 != null ? email3.hashCode() : 0);
         return result;
     }
-
 }
