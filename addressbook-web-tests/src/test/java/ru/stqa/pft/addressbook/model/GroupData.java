@@ -3,7 +3,6 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import jdk.nashorn.internal.objects.annotations.Constructor;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -22,7 +21,7 @@ public class GroupData {
 
     @Expose
     @Column(name = "group_name")
-    private final String name;
+    private String name;
 
     @Expose
     @Column(name = "group_header")
@@ -72,6 +71,11 @@ public class GroupData {
 
     public GroupData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public GroupData withName(String name) {
+        this.name = name;
         return this;
     }
 
