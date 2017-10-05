@@ -6,6 +6,8 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -42,9 +44,6 @@ public class ContactData {
     private final String workPhone;
 
     @Transient
-    private String group;
-
-    @Transient
     private String allPhones;
 
     @Column(name = "email")
@@ -53,7 +52,7 @@ public class ContactData {
 
     @Column(name = "email2")
     @Type(type = "text")
-    private  final String email2;
+    private final String email2;
 
     @Column(name = "email3")
     @Type(type = "text")
@@ -65,7 +64,11 @@ public class ContactData {
     @Transient
     private File photo;
 
-    public ContactData(int id, String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group, String email, String email2,
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
+    public ContactData(int id, String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String email, String email2,
                        String email3, File photo) {
         this.id = id;
         this.firstname = firstname;
@@ -75,7 +78,6 @@ public class ContactData {
         this.homephone = homephone;
         this.mobilephone = mobilephone;
         this.workPhone = workPhone;
-        this.group = group;
         this.email = email;
         this.email2 = email2;
         this.email3 = email3;
@@ -84,7 +86,7 @@ public class ContactData {
         this.photo = photo;
     }
 
-    public ContactData(String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String group, String email, String email2,
+    public ContactData(String firstname, String middlename, String lastname, String addres, String homephone, String mobilephone, String workPhone, String email, String email2,
                         String email3, File photo) {
         this.id = 0;
         this.firstname = firstname;
@@ -97,7 +99,6 @@ public class ContactData {
         this.email = email;
         this.email2 = email2;
         this.email3 = email3;
-        this.group = group;
         this.allPhones = null;
         this.allEmails = null;
         this.photo = photo;
@@ -114,7 +115,6 @@ public class ContactData {
         this.email = null;
         this.email2 = null;
         this.email3 = null;
-        this.group = null;
         this.allPhones = null;
         this.allEmails = null;
         this.photo = null;
@@ -148,10 +148,6 @@ public class ContactData {
         return workPhone;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public int getId() {
         return id;
     }
@@ -176,6 +172,10 @@ public class ContactData {
         return allPhones;
     }
 
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
+
     public ContactData withAllPhones(String allPhones) {
         this.allPhones = allPhones;
         return this;
@@ -196,6 +196,11 @@ public class ContactData {
 
     public ContactData withId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
         return this;
     }
 

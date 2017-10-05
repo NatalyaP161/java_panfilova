@@ -52,6 +52,10 @@ public class HelperBase {
         click(By.name("update"));
     }
 
+    public void addContactInGroup() {
+        click(By.name("add"));
+    }
+
     protected boolean isElementPresent(By locator) {
         try {
             wd.findElement(locator);

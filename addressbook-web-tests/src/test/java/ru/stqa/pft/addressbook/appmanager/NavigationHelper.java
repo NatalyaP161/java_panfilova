@@ -28,4 +28,8 @@ public class NavigationHelper extends HelperBase {
     public void returnToGroupPage() {
         click(By.linkText("group page"));
     }
+
+    public void GroupPageByName(String name) {
+        click(By.linkText("group page \"" + name + "\""));
+    }
 }

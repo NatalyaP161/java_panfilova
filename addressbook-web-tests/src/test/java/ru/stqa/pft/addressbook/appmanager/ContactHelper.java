@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void fillContactForm(ContactData contactData, boolean creation) {
+    public void fillContactForm(ContactData contactData, boolean creation, String group) {
         type(By.name("firstname"), contactData.getFirstname());
         type(By.name("middlename"), contactData.getMiddlename());
         type(By.name("lastname"), contactData.getLastname());
@@ -30,11 +31,11 @@ public class ContactHelper extends HelperBase {
         attach(By.name("photo"), contactData.getPhoto());
 
         if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-        } else {
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(group);
+            } else {
+                Assert.assertFalse(isElementPresent(By.name("new_group")));
+            }
         }
-    }
 
     public void initContactCreation() {
         click(By.linkText("add new"));
@@ -53,18 +54,28 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void create(ContactData contact, boolean b) {
+    public void create(ContactData contact, boolean b, String group) {
         initContactCreation();
-        fillContactForm(contact, true);
+        fillContactForm(contact, true, group);
         submitCreation();
         contactCache = null;
     }
 
     public void modify(ContactData contact) {
         initContactModificationById(contact.getId());
-        fillContactForm(contact,false);
+        fillContactForm(contact, false, null);
         submitModification();
         contactCache = null;
+    }
+
+    public void addInGroup(ContactData addedContact, GroupData group) {
+        initContactModificationById(addedContact.getId());
+        chooseGroupByName(group.getId());
+        addContactInGroup();
+    }
+
+    private void chooseGroupByName(int id) {
+        new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(id));
     }
 
     public void delete(ContactData contact) {
@@ -84,7 +95,7 @@ public class ContactHelper extends HelperBase {
     private Contacts contactCache = null;
 
     public Contacts all() {
-        if(contactCache != null) {
+        if (contactCache != null) {
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
@@ -98,8 +109,7 @@ public class ContactHelper extends HelperBase {
             String allPhones = cells.get(5).getText();
             String adress = cells.get(3).getText();
             String allEmails = cells.get(4).getText();
-            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null,
-                    null)
+            ContactData contact = new ContactData(id, firstname, null, lastname, adress, null, null, null, null, null, null, null)
                     .withAllPhones(allPhones).withAllEmails(allEmails);
             contactCache.add(contact);
         }
@@ -118,6 +128,6 @@ public class ContactHelper extends HelperBase {
         String email2 = wd.findElement(By.name("email2")).getAttribute("value");
         String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
-        return new ContactData(contact.getId(), firstname, null, lastname, address, homePhone, mobilePhome, workPhone, null, email, email2, email3, null);
+        return new ContactData(contact.getId(), firstname, null, lastname, address, homePhone, mobilePhome, workPhone, email, email2, email3, null);
     }
 }

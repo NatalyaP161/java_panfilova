@@ -4,6 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -14,9 +15,10 @@ public class ContactDeletionTest extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
         if (app.db().contacts().size() == 0) {
+            Groups groups = app.db().groups();
             app.goTo().HomePage();
             app.contact().create(new ContactData("Иван", "Васильевич", "Иванов", null, "221-65-52", "89185555550","456-55-51",
-                            "test1", "1.ru", "2.ru", "3.ru", null),true);
+                             "1.ru", "2.ru", "3.ru", null),true, groups.iterator().next().getName());
             app.goTo().HomePage();
         }
     }

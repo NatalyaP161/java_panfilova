@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -15,8 +16,9 @@ public class ContactInfoTest extends TestBase {
     public void testContactInfo() {
         app.goTo().HomePage();
         if (app.contact().all().size() == 0) {
+            Groups groups = app.db().groups();
             app.contact().create(new ContactData("Иван", "Васильевич", "Иванов", null, "221-65-52", "89185555550","456-55-51",
-                            "test1", "Email1", "Email2", "Email3", null),true);
+                             "Email1", "Email2", "Email3", null),true, groups.iterator().next().getName());
             app.goTo().HomePage();
         }
 
