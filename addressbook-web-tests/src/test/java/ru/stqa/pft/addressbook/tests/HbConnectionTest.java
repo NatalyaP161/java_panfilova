@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.apache.xpath.SourceTree;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

@@ -30,6 +30,15 @@ public class DbHelper {
         return new Groups(result);
     }
 
+    public Groups groupById(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<GroupData> result = session.createQuery("from GroupData where deprecated = '0000-00-00' and group_id = " + id).list();
+        session.getTransaction().commit();
+        session.close();
+        return new Groups(result);
+    }
+
     public Contacts contacts() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();

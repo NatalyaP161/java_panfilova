@@ -69,13 +69,23 @@ public class ContactHelper extends HelperBase {
     }
 
     public void addInGroup(ContactData addedContact, GroupData group) {
-        initContactModificationById(addedContact.getId());
-        chooseGroupByName(group.getId());
+        selectContactById(addedContact.getId());
+        chooseToGroupById(group.getId());
         addContactInGroup();
     }
 
-    private void chooseGroupByName(int id) {
+    public void deleteFromGroup(ContactData deletedContact, GroupData group) {
+        chooseGroupById(group.getId());
+        selectContactById(deletedContact.getId());
+        removeContactFromGroup();
+    }
+
+    private void chooseToGroupById(int id) {
         new Select(wd.findElement(By.name("to_group"))).selectByValue(String.valueOf(id));
+    }
+
+    private void chooseGroupById(int id) {
+        new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(id));
     }
 
     public void delete(ContactData contact) {
