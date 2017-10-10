@@ -43,4 +43,11 @@ public class ApplicationManager {
         wd.quit();
     }
 
+    public httpSession newSession() {
+        return new httpSession(this);
+    }
+
+    public String getProperty(String key) {
+        return properties.getProperty(key);
+    }
 }

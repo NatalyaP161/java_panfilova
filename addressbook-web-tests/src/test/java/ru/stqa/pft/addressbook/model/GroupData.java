@@ -49,12 +49,6 @@ public class GroupData {
         this.footer = footer;
     }
 
-    /*public GroupData(Stream<GroupData> groupDataStream) {
-        this.name = null;
-        this.header = null;
-        this.footer = null;
-    }*/
-
     public GroupData() {
         this.name = null;
         this.header = null;
