@@ -24,20 +24,33 @@ public class httpSession {
         httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
     }
 
-    public boolean login(String username, String password) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
+    public boolean login(String username) throws IOException {
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_page.php");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", username));
-        params.add(new BasicNameValuePair("password", password));
         params.add(new BasicNameValuePair("secure_session", "on"));
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+        return body.contains(String.format("<input id=\"username\" name=\"username\" type=\"text\" placeholder=\"Username\"\n" +
+                "\t\t\t\t\t\t   size=\"32\" maxlength=\"191\" value=\"%s\"\n" +
+                "\t\t\t\t\t\t   class=\"form-control autofocus\">", username));
     }
 
-    private String geTextFrom(CloseableHttpResponse response) throws IOException{
+    public boolean loginPassword(String username, String password) throws IOException {
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_password_page.php");
+        List<NameValuePair> params = new ArrayList<>();
+        params.add(new BasicNameValuePair("password", password));
+        params.add(new BasicNameValuePair("secure_session", "on"));
+        params.add(new BasicNameValuePair("return", "account_page.php"));
+        post.setEntity(new UrlEncodedFormEntity(params));
+        CloseableHttpResponse response = httpClient.execute(post);
+        String body = geTextFrom(response);
+        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
+    }
+
+    private String geTextFrom(CloseableHttpResponse response) throws IOException {
         try {
             return EntityUtils.toString(response.getEntity());
         } finally {
@@ -46,9 +59,9 @@ public class httpSession {
     }
 
     public boolean isLoggedInAs(String username) throws IOException {
-        HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
+        HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/account_page.php");
         CloseableHttpResponse response = httpClient.execute(get);
         String body = geTextFrom(response);
-        return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+        return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 }
