@@ -25,7 +25,7 @@ public class httpSession {
     }
 
     public boolean login(String username) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_page.php");
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_password_page.php");
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", username));
         params.add(new BasicNameValuePair("secure_session", "on"));
@@ -33,13 +33,12 @@ public class httpSession {
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
-        return body.contains(String.format("<input id=\"username\" name=\"username\" type=\"text\" placeholder=\"Username\"\n" +
-                "\t\t\t\t\t\t   size=\"32\" maxlength=\"191\" value=\"%s\"\n" +
-                "\t\t\t\t\t\t   class=\"form-control autofocus\">", username));
+        Boolean test = body.contains(String.format("<input type=\"hidden\" name=\"username\" value=\"%s\" />", username));
+        return body.contains(String.format("<input type=\"hidden\" name=\"username\" value=\"%s\" />", username));
     }
 
     public boolean loginPassword(String username, String password) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_password_page.php");
+        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/mantisbt-2.6.0/login_password_page.php");// ???
         List<NameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("password", password));
         params.add(new BasicNameValuePair("secure_session", "on"));
@@ -47,6 +46,7 @@ public class httpSession {
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
+        Boolean test = body.contains(String.format("<span class=\"user-info\">%s</span>", username));
         return body.contains(String.format("<span class=\"user-info\">%s</span>", username));
     }
 
