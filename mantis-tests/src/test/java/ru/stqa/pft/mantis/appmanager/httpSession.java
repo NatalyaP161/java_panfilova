@@ -45,6 +45,7 @@ public class httpSession {
         post.setEntity(new UrlEncodedFormEntity(params));
         CloseableHttpResponse response = httpClient.execute(post);
         String body = geTextFrom(response);
+        boolean test = body.contains(String.format("<a href=\"mailto:webmaster@example.com\" title=\"Contact the webmaster via e-mail.\">%s</a>", username));
         return body.contains(String.format("<a href=\"mailto:webmaster@example.com\" title=\"Contact the webmaster via e-mail.\">%s</a>", username));
     }
 
